@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
+import NextAuthProvider from "@/app/context/NextAuth";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -18,9 +19,11 @@ export default function RootLayout({
   return (
     <html className={openSans.className}>
       <body className="flex flex-col w-full mx-auto max-w-screen-2xl">
-        <Header />
-        <main className="grow">{children}</main>
-        <footer className="bg-green-100">footer</footer>
+        <NextAuthProvider>
+          <Header />
+          <main className="grow">{children}</main>
+          <footer className="bg-green-100">footer</footer>
+        </NextAuthProvider>
       </body>
     </html>
   );
