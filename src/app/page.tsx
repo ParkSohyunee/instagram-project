@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const gradientColor =
-  "bg-gradient-to-tr from-yellow-500 from-20% via-pink-500 via-50% to-purple-500 to-90%";
+  "bg-gradient-to-tr from-yellow from-20 via-pink via-50 to-purple to-90";
 
 export default function Home() {
   return (
