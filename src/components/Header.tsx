@@ -5,12 +5,10 @@ import { BiSearch } from "react-icons/bi";
 import { BsPlusSquare } from "react-icons/bs";
 import Loginbutton from "./LoginButton";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
-import Link from "next/link";
+import UserAvatar from "./UserAvatar";
 
 export default function Header() {
   const { data } = useSession();
-  console.log(data);
 
   return (
     <header className="flex justify-between items-center py-4 px-8 border-b shadow-sm">
@@ -20,18 +18,12 @@ export default function Header() {
         <BiSearch />
         <BsPlusSquare className="text-2xl" />
         {data && (
-          <Link
-            href={"/"}
-            className={`bg-gradient-to-tr from-yellow from-20 via-pink via-50 to-purple to-90 rounded-full p-0.5`}
-          >
-            <Image
-              src={`${data.user?.image}`}
-              width={40}
-              height={40}
-              alt="user-avatar"
-              className="rounded-full"
-            />
-          </Link>
+          <UserAvatar
+            image={data.user.image || ""}
+            size="small"
+            highlighter={true}
+            username={data.user.username}
+          />
         )}
         <Loginbutton size="small" type={false} />
       </nav>
