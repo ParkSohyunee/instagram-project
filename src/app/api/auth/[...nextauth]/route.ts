@@ -1,3 +1,4 @@
+import createUser from "@/service/sanity";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -9,7 +10,18 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    session({ session }) {
+    async signIn({ user: { id, name, email, image } }) {
+      if (!email || !name) return false;
+      createUser({
+        id,
+        name,
+        username: email.split("@")[0],
+        email,
+        image: image || "",
+      });
+      return true;
+    },
+    async session({ session }) {
       const user = session.user;
       if (user) {
         session.user = {

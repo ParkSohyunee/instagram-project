@@ -18,7 +18,11 @@ export default function Loginbutton(props: Props) {
   const padding = props.size === "large" ? "py-4 px-8" : " px-2 py-1";
 
   const handleSignin = async () => {
-    await signIn("google", { callbackUrl: "http://localhost:3000" });
+    try {
+      await signIn("google", { callbackUrl: "http://localhost:3000" });
+    } catch (error) {
+      if (error instanceof Error) console.log(error.message);
+    }
   };
 
   const handelSignout = async () => {
