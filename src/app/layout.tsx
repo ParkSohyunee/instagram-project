@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import NextAuthProvider from "@/app/context/NextAuth";
+import { SWRProvider } from "./context/SwrProvider";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -20,9 +21,11 @@ export default function RootLayout({
     <html className={openSans.className}>
       <body className="flex flex-col w-full mx-auto max-w-screen-2xl">
         <NextAuthProvider>
-          <Header />
-          <main className="grow">{children}</main>
-          <footer className="bg-green-100">footer</footer>
+          <SWRProvider>
+            <Header />
+            <main className="grow">{children}</main>
+            <footer className="bg-green-100">footer</footer>
+          </SWRProvider>
         </NextAuthProvider>
       </body>
     </html>
