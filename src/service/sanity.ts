@@ -17,7 +17,7 @@ export interface User {
 }
 
 // prettier-ignore
-export default async function createUser({id, name, email, image}: User) {
+export async function createUser({id, name, email, image, }: User) {
   return await client.createIfNotExists({
     _type: "user",
     _id: id,
@@ -25,5 +25,19 @@ export default async function createUser({id, name, email, image}: User) {
     name,
     email,
     image,
+    followers: [],
+    following: []
   });
+}
+
+export async function getUser(username: string) {
+  return await client.fetch(
+    `*[_type == "user" && username == "${username}"][0]{
+      ...,
+      "id":_id,
+      following[]->{username,image},
+      followers[]->{username,image},
+      "bookmarks":bookmarks[]->_id
+    }`
+  );
 }
