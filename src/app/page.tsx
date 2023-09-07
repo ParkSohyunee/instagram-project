@@ -4,8 +4,8 @@ import { useSession } from "next-auth/react";
 
 import Sidebar from "@/components/Sidebar";
 import Link from "next/link";
-import Following from "./following/page";
 import PostList from "./postList/page";
+import FollowingBar from "@/components/FollowingBar";
 
 const gradientColor =
   "bg-gradient-to-tr from-yellow from-20 via-pink via-50 to-purple to-90";
@@ -17,7 +17,7 @@ export default function Home() {
       {session ? (
         <section className="w-full flex gap-8">
           <div className="w-[70%] flex flex-col items-center">
-            <Following />
+            <FollowingBar />
             <PostList />
           </div>
           <div className="w-[30%]">

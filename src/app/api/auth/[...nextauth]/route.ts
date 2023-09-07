@@ -1,4 +1,4 @@
-import createUser from "@/service/sanity";
+import { createUser } from "@/service/sanity";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
