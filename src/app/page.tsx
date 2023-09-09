@@ -13,7 +13,7 @@ const gradientColor =
 export default function Home() {
   const { data: session } = useSession();
   return (
-    <section className="flex items-center justify-center p-4">
+    <section className="flex items-center justify-center p-8">
       {session ? (
         <section className="w-full flex gap-8">
           <div className="w-[70%] flex flex-col items-center">

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 interface UserImage {
@@ -14,23 +13,22 @@ export default function UserAvatar({
   highlighter,
   username,
 }: UserImage) {
-  const imageSize = size === "small" ? 40 : 50;
+  const linkImageSize = size === "small" ? "w-14 h-14" : "w-20 h-20";
 
   return (
-    <Link
-      href={`/user/${username}`}
-      className={`w-[${imageSize}px] h-[${imageSize}px] ${
-        highlighter &&
-        `bg-gradient-to-tr from-yellow from-20 via-pink via-50 to-purple to-90 rounded-full p-0.5`
-      }`}
-    >
-      <Image
-        src={image}
-        width={imageSize}
-        height={imageSize}
-        alt="user-avatar"
-        className="rounded-full"
-      />
+    <Link href={`/user/${username}`}>
+      <div
+        className={`${linkImageSize} ${
+          highlighter &&
+          `bg-gradient-to-tr from-yellow from-20 via-pink via-50 to-purple to-90 rounded-full`
+        }`}
+      >
+        <img
+          src={image}
+          alt="user-avatar"
+          className={`rounded-full ${linkImageSize} p-0.5`}
+        />
+      </div>
     </Link>
   );
 }
