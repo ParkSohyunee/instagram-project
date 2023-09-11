@@ -4,8 +4,8 @@ import { useSession } from "next-auth/react";
 
 import Sidebar from "@/components/Sidebar";
 import Link from "next/link";
-import PostList from "./postList/page";
 import FollowingBar from "@/components/FollowingBar";
+import PostList from "@/components/PostList";
 
 const gradientColor =
   "bg-gradient-to-tr from-yellow from-20 via-pink via-50 to-purple to-90";

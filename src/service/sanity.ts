@@ -1,4 +1,8 @@
+import { SimplePost } from "@/model/post";
+import { User } from "@/model/user";
 import { createClient } from "@sanity/client";
+import imageUrlBuilder from "@sanity/image-url";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
@@ -7,14 +11,6 @@ export const client = createClient({
   apiVersion: "2023-09-04", // use current date (YYYY-MM-DD) to target the latest API version
   token: process.env.NEXT_PUBLIC_SANITY_SECRET_TOKEN, // Only if you want to update content with the client
 });
-
-export interface User {
-  id: string;
-  username: string;
-  name: string;
-  email: string;
-  image?: string;
-}
 
 // prettier-ignore
 export async function createUser({id, name, email, image, }: User) {
@@ -40,4 +36,36 @@ export async function getUser(username: string) {
       "bookmarks":bookmarks[]->_id
     }`
   );
+}
+
+const builder = imageUrlBuilder(client);
+
+function urlFor(source: SanityImageSource) {
+  return builder.image(source).width(800).url();
+}
+
+const simplePostProjection = `
+  ...,
+  "username": author->username,
+  "userImage": author -> image,
+  "image": photo,
+  "likes": likes[]->username,
+  "text": comments[0].comment,
+  "comments": count(comments),
+  "id": _id,
+  "createdAt": _createdAt
+`;
+
+export async function getPosts(username: string) {
+  return await client
+    .fetch(
+      `
+    *[_type == "post" && author->username == "${username}" 
+      || author._ref in *[_type == "user" && username == "${username}"].following[]._ref]
+      | order(_createdAt desc){${simplePostProjection}}
+    `
+    )
+    .then((posts) =>
+      posts.map((post: SimplePost) => ({ ...post, image: urlFor(post.image) }))
+    );
 }
