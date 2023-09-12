@@ -16,7 +16,7 @@ export default function Home() {
     <section className="flex items-center justify-center p-8">
       {session ? (
         <section className="w-full flex gap-8">
-          <div className="w-[70%] flex flex-col items-center">
+          <div className="w-[70%] flex flex-col items-center gap-4">
             <FollowingBar />
             <PostList />
           </div>
