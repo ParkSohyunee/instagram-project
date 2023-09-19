@@ -6,15 +6,33 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { PiBookmarkSimple } from "react-icons/pi";
 import { BsEmojiSmile } from "react-icons/bs";
 import { getTimeagoPostCreate } from "@/service/utiles";
+import ModalDialog from "./ModalDialog";
+import { useState } from "react";
+import { createPortal } from "react-dom";
 
 export default function PostList() {
+  const [showModal, setShowModal] = useState(false);
+  const [postId, setPostId] = useState("");
   const { data } = useSWR<SimplePost[]>("/api/posts");
-  console.log(data);
+
+  const handleModal = () => {
+    setShowModal((prev) => !prev);
+  };
+
+  const onClickPostDetail = (e: any) => {
+    setPostId(e.currentTarget.id);
+    handleModal();
+  };
 
   return (
     <section>
+      {showModal &&
+        createPortal(
+          <ModalDialog onClick={handleModal} post={postId} />,
+          document.body
+        )}
       {data &&
-        data.map((post: any) => (
+        data.map((post) => (
           <article
             key={post.id}
             className="rounded-md overflow-hidden shadow-lg bg-neutral-50 mb-4"
@@ -29,6 +47,8 @@ export default function PostList() {
               <h1 className="font-semibold">{post.username}</h1>
             </div>
             <Image
+              id={post.id}
+              onClick={onClickPostDetail}
               className="w-[550px] h-[600px]"
               src={post.image}
               width={500}
