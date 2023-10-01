@@ -22,7 +22,8 @@ export async function createUser({id, name, email, image, }: User) {
     email,
     image,
     followers: [],
-    following: []
+    following: [],
+    comments: []
   });
 }
 
@@ -51,7 +52,7 @@ const simplePostProjection = `
   "image": photo,
   "likes": likes[]->username,
   "text": comments[0].comment,
-  "comments": count(comments),
+  "comments": comments,
   "id": _id,
   "createdAt": _createdAt
 `;

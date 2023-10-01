@@ -6,7 +6,7 @@ interface ActionProps {
   username: string;
   text: string;
   createdAt: string;
-  likes: string[];
+  likes?: string[];
 }
 
 export default function Action({
