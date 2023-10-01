@@ -41,7 +41,7 @@ export default function FollowingBar() {
           responsive={responsive}
           infinite={true}
           autoPlay={true}
-          className="w-full h-full"
+          className="w-full h-full z-0"
         >
           {data?.following.map((user: any) => (
             <div key={user.username} className="flex flex-col items-center">

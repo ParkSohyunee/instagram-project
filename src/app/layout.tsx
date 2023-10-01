@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html className={openSans.className}>
-      <body className="flex flex-col w-full mx-auto max-w-screen-2xl">
+      <body className="flex flex-col w-full h-full mx-auto max-w-screen-2xl">
         <NextAuthProvider>
           <SWRProvider>
             <Header />
