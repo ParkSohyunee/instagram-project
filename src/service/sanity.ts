@@ -70,3 +70,18 @@ export async function getPosts(username: string) {
       posts.map((post: SimplePost) => ({ ...post, image: urlFor(post.image) }))
     );
 }
+
+export async function searchUser(keyword?: string) {
+  const query = keyword
+    ? `&& username match "${keyword}" || name match "${keyword}"`
+    : ``;
+
+  return await client.fetch(
+    `*[_type == "user" ${query}]{
+      ...,
+      "id":_id,
+      "following": count(following),
+      "followers": count(followers),
+    }`
+  );
+}
