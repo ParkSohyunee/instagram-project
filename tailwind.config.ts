@@ -7,6 +7,10 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    borderWidth: {
+      default: "1px",
+      "1": "1px",
+    },
     extend: {
       colors: {
         yellow: "#eab308",
