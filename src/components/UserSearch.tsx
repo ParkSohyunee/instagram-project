@@ -9,12 +9,18 @@ import { GridLoader } from "react-spinners";
 export default function Usersearch() {
   const [keyword, setKeyword] = useState("");
   const { data, isLoading } = useSWR(`/api/search/${keyword}`);
-  //   console.log(data);
+
+  const onKeyHandeler = (e: any) => {
+    if (e.key === "Enter") {
+      setKeyword(e.target.value);
+    }
+  };
 
   return (
     <section className="my-8 mx-40">
       <div className="w-full p-4 border-solid border-1 border-neutral-400">
         <input
+          onKeyUp={onKeyHandeler}
           placeholder="Search for a username or name"
           className="w-full text-2xl focus:outline-none"
         />
