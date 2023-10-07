@@ -5,15 +5,15 @@ import { useState } from "react";
 import useSWR from "swr";
 import SearchCard from "./SearchCard";
 import { GridLoader } from "react-spinners";
+import useDebounce from "./commons/hooks/useDebounce";
 
 export default function Usersearch() {
   const [keyword, setKeyword] = useState("");
-  const { data, isLoading } = useSWR(`/api/search/${keyword}`);
+  const debouncedSearch = useDebounce(keyword, 500);
+  const { data, isLoading } = useSWR(`/api/search/${debouncedSearch}`);
 
   const onKeyHandeler = (e: any) => {
-    if (e.key === "Enter") {
-      setKeyword(e.target.value);
-    }
+    setKeyword(e.target.value);
   };
 
   return (
