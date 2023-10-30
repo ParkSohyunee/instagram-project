@@ -23,7 +23,7 @@ export default function RootLayout({
         <NextAuthProvider>
           <SWRProvider>
             <Header />
-            <main className="grow">{children}</main>
+            <main className="grow px-20 py-14">{children}</main>
             <footer className="bg-green-100">footer</footer>
           </SWRProvider>
         </NextAuthProvider>

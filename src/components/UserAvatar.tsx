@@ -7,13 +7,26 @@ interface UserImage {
   username: string;
 }
 
+interface avatarSize {
+  [key: string]: string;
+  small: string;
+  medium: string;
+  large: string;
+}
+
+const avatarSize: avatarSize = {
+  small: "w-14 h-14",
+  medium: "w-20 h-20",
+  large: "w-24 h-24",
+};
+
 export default function UserAvatar({
   image,
   size,
   highlighter,
   username,
 }: UserImage) {
-  const linkImageSize = size === "small" ? "w-14 h-14" : "w-20 h-20";
+  const linkImageSize = avatarSize[size];
 
   return (
     <Link href={`/user/${username}`}>
