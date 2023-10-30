@@ -1,3 +1,4 @@
+import FollowButton from "@/components/FollowButton";
 import UserAvatar from "@/components/UserAvatar";
 import { getUserForProfile } from "@/service/sanity";
 
@@ -36,9 +37,7 @@ export default async function UserPage({ params: { username } }: Props) {
         <div className="flex flex-col gap-2">
           <p className="flex gap-8 items-center">
             <span className="text-lg">{profileName}</span>
-            <button className="font-semibold text-white bg-red-600 rounded-md px-6 py-1">
-              unfollow
-            </button>
+            <FollowButton profileName={profileName} />
           </p>
           <p className="flex gap-4">
             <span className="whitespace-nowrap">{postsCount} posts</span>
