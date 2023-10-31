@@ -71,6 +71,47 @@ export async function getPosts(username: string) {
     );
 }
 
+export async function getPostOf(username: string) {
+  return await client
+    .fetch(
+      `
+    *[_type == "post" && author->username == "${username}"]
+    | order(_createdAt desc){${simplePostProjection}}
+    `
+    )
+    .then((posts: SimplePost[]) =>
+      posts.map((post: SimplePost) => ({ ...post, image: urlFor(post.image) }))
+    );
+}
+
+export async function getLikedPostsOf(username: string) {
+  return await client
+    .fetch(
+      /** likes 안에 username이 있는 posts들만 가지고 오기 */
+      `
+    *[_type == "post" && "${username}" in likes[]->username]
+    | order(_createdAt desc){${simplePostProjection}}
+    `
+    )
+    .then((posts: SimplePost[]) =>
+      posts.map((post: SimplePost) => ({ ...post, image: urlFor(post.image) }))
+    );
+}
+
+export async function getSavedPostsOf(username: string) {
+  return await client
+    .fetch(
+      /** bookmarks 안에 username이 있는 posts들만 가지고 오기 */
+      `
+    *[_type == "post" && _id in *[_type == "user" && username == "${username}"].bookmarks[]._ref]
+    | order(_createdAt desc){${simplePostProjection}}
+    `
+    )
+    .then((posts: SimplePost[]) =>
+      posts.map((post: SimplePost) => ({ ...post, image: urlFor(post.image) }))
+    );
+}
+
 export async function searchUser(keyword?: string) {
   const query = keyword
     ? `&& username match "${keyword}" || name match "${keyword}"`

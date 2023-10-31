@@ -1,5 +1,6 @@
 import FollowButton from "@/components/FollowButton";
 import UserAvatar from "@/components/UserAvatar";
+import UserPosts from "@/components/UserPosts";
 import { getUserForProfile } from "@/service/sanity";
 
 interface Props {
@@ -51,6 +52,7 @@ export default async function UserPage({ params: { username } }: Props) {
           <p className="text-xl font-semibold">{name}</p>
         </div>
       </article>
+      <UserPosts user={profile} />
     </section>
   );
 }
