@@ -4,19 +4,29 @@ import UserAvatar from "./UserAvatar";
 import Image from "next/image";
 import Action from "./Action";
 import InputForm from "./InputForm";
+import { MouseEvent } from "react";
 
 interface ModalDialog {
-  onClick: () => void;
+  onClose: () => void;
   post: string;
 }
 
-export default function ModalDialog({ post, onClick }: ModalDialog) {
+export default function ModalDialog({ post, onClose }: ModalDialog) {
   const { data } = useSWR<SimplePost[]>("/api/posts");
   if (!data) return;
   const postDetail = data.find((el) => el.id === post);
 
+  const handleOutSideClick = (e: MouseEvent<HTMLSelectElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
-    <section className="absolute w-full h-full flex justify-center items-center z-[1000] bg-black/60">
+    <section
+      onClick={handleOutSideClick}
+      className="fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center z-[1000] bg-black/60 p-8"
+    >
       <div className="bg-white flex  ">
         <Image
           className="w-[550px] h-[600px] cursor-pointer"
@@ -45,8 +55,8 @@ export default function ModalDialog({ post, onClick }: ModalDialog) {
         </div>
       </div>
       <button
-        onClick={() => onClick()}
-        className="relative left-8 bottom-60 text-white"
+        onClick={() => onClose()}
+        className="fixed top-0 right-0 text-white p-8 text-2xl"
       >
         닫기
       </button>
