@@ -7,6 +7,7 @@ import ModalDialog from "./ModalDialog";
 import InputForm from "./InputForm";
 
 import Action from "./Action";
+import ModalPortal from "./ModalPortal";
 
 interface PostCardProps {
   id: string;
@@ -30,22 +31,20 @@ export default function PostCard({
   const [showModal, setShowModal] = useState(false);
   const [postId, setPostId] = useState("");
 
-  const handleModal = () => {
-    setShowModal((prev) => !prev);
-  };
-
   const onClickPostDetail = (e: any) => {
     setPostId(e.currentTarget.id);
-    handleModal();
+    setShowModal(true);
   };
+
+  document.body.style.overflow = showModal ? "hidden" : "auto";
 
   return (
     <>
-      {showModal &&
-        createPortal(
-          <ModalDialog onClick={handleModal} post={postId} />,
-          document.body
-        )}
+      {showModal && (
+        <ModalPortal>
+          <ModalDialog onClose={() => setShowModal(false)} post={postId} />
+        </ModalPortal>
+      )}
       <div className="flex items-center gap-4 p-2">
         <UserAvatar
           image={userImage}

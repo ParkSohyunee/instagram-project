@@ -27,6 +27,8 @@ export default function RootLayout({
             <footer className="bg-green-100">footer</footer>
           </SWRProvider>
         </NextAuthProvider>
+        {/* body 안 가장 마지막 요소에 portal을 만들어줌 */}
+        <div id="portal" />
       </body>
     </html>
   );
