@@ -19,13 +19,6 @@ const tabs = [
 ];
 
 export default function UserPosts({ user: { username } }: Props) {
-  /**
-   * api/users/${username}/posts
-   * api/users/${username}/liked
-   * api/users/${username}/bookmarks
-   * 데이터, 액션, 계산 분리하기
-   */
-
   const [tab, setTeb] = useState("posts");
 
   const handleChangeTab = (e: MouseEvent<HTMLLIElement>) => {
@@ -33,17 +26,17 @@ export default function UserPosts({ user: { username } }: Props) {
   };
 
   return (
-    <section className="flex flex-col gap-4">
-      <ul className="flex items-center gap-2">
+    <section>
+      <ul className="flex justify-center uppercase gap-2">
         {tabs.map(({ type, icon }) => (
           <li
             key={type}
             id={type}
-            className="flex items-center gap-2 cursor-pointer"
+            className="mx-12 p-4 cursor-pointe border-black"
             onClick={handleChangeTab}
           >
-            <span>{icon}</span>
-            <span>{type}</span>
+            <button className="scale-150 md:scale-100">{icon}</button>
+            <span className="hidden md:inline">{type}</span>
           </li>
         ))}
       </ul>
