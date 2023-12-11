@@ -32,7 +32,9 @@ export default function UserPosts({ user: { username } }: Props) {
           <li
             key={type}
             id={type}
-            className="mx-12 p-4 cursor-pointe border-black"
+            className={`mx-12 p-4 cursor-pointe border-black ${
+              type === tab && "font-bold border-t"
+            }`}
             onClick={handleChangeTab}
           >
             <button className="scale-150 md:scale-100">{icon}</button>
