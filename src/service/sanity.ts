@@ -145,3 +145,23 @@ export async function getUserForProfile(username: string) {
       posts: user.posts ?? 0,
     }));
 }
+
+export async function likePost(postId: string, userId: string) {
+  return await client
+    .patch(postId)
+    .setIfMissing({ likes: [] }) // likes가 없다면, 빈 배열로 설정
+    .append("likes", [
+      {
+        _ref: userId,
+        _type: "reference", // sanity schema애서 정의한 likes 배열의 참조 타입
+      },
+    ])
+    .commit({ autoGenerateArrayKeys: true }); // Adds a `_key` attribute to array items
+}
+
+export async function disLikePost(postId: string, userId: string) {
+  return await client
+    .patch(postId)
+    .unset([`likes[_ref=="${userId}"]`]) // userId가 배열에 들어있다면 unset => likes 배열은 좋아요를 누른 user가 들어있음
+    .commit();
+}
