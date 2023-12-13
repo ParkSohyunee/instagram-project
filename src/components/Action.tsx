@@ -1,8 +1,16 @@
+import { useState } from "react";
+import { useSWRConfig } from "swr";
+import { useSession } from "next-auth/react";
+
 import { getTimeagoPostCreate } from "@/service/utiles";
 import BookmarkIcon from "./ui/icons/BookmarkIcon";
 import LikesHeartIcon from "./ui/icons/LikesHeartIcon";
+import ToggleButton from "./ui/ToggleButton";
+import LikesHeartFillIcon from "./ui/icons/LikesHeartFillIcon";
+import BookmarkFillIcon from "./ui/icons/BookmarkFillIcon";
 
 interface ActionProps {
+  id: string;
   username: string;
   text: string;
   createdAt: string;
@@ -10,16 +18,43 @@ interface ActionProps {
 }
 
 export default function Action({
+  id,
   username,
   text,
   createdAt,
   likes,
 }: ActionProps) {
+  const [liked, setLiked] = useState(false);
+  const [bookmarked, setBookMarked] = useState(false);
+
+  // // 로그인한 사용자가 좋아요를 했는지 여부 확인
+  // const { data: session } = useSession();
+  // const isLikesPost = likes?.includes(session?.user.username as string);
+
+  // const { mutate } = useSWRConfig(); // swr에게 상태가 변경됨을 알려준다.
+
+  // const handleLikePost = (like: boolean) => {
+  //   fetch("api/likes", {
+  //     method: "PUT",
+  //     body: JSON.stringify({ id, like }),
+  //   }).then(() => mutate("/api/posts")); // like 처리후에 posts 상태를 업데이트 해줘
+  // };
+
   return (
     <div className="flex flex-col gap-2 p-4">
       <div className="flex justify-between items-center text-2xl">
-        <LikesHeartIcon />
-        <BookmarkIcon />
+        <ToggleButton
+          toggle={liked}
+          onToggle={setLiked}
+          onIcon={<LikesHeartIcon />}
+          offIcon={<LikesHeartFillIcon />}
+        />
+        <ToggleButton
+          toggle={bookmarked}
+          onToggle={setBookMarked}
+          onIcon={<BookmarkIcon />}
+          offIcon={<BookmarkFillIcon />}
+        />
       </div>
       <p className="font-semibold">
         {`${likes && likes.length ? `${likes.length} likes` : "0 like"}`}
