@@ -24,36 +24,36 @@ export default function Action({
   createdAt,
   likes,
 }: ActionProps) {
-  const [liked, setLiked] = useState(false);
   const [bookmarked, setBookMarked] = useState(false);
 
-  // // 로그인한 사용자가 좋아요를 했는지 여부 확인
-  // const { data: session } = useSession();
-  // const isLikesPost = likes?.includes(session?.user.username as string);
+  // 로그인한 사용자가 좋아요를 했는지 여부 확인
+  const { data: session } = useSession();
+  const user = session?.user;
+  const liked = user ? likes?.includes(user.username) : false;
 
-  // const { mutate } = useSWRConfig(); // swr에게 상태가 변경됨을 알려준다.
+  const { mutate } = useSWRConfig(); // swr에게 상태가 변경됨을 알려줌
 
-  // const handleLikePost = (like: boolean) => {
-  //   fetch("api/likes", {
-  //     method: "PUT",
-  //     body: JSON.stringify({ id, like }),
-  //   }).then(() => mutate("/api/posts")); // like 처리후에 posts 상태를 업데이트 해줘
-  // };
+  const handleLikePost = (like: boolean) => {
+    fetch("api/likes", {
+      method: "PUT",
+      body: JSON.stringify({ id, like }),
+    }).then(() => mutate("/api/posts")); // like 처리후에 posts 상태를 업데이트
+  };
 
   return (
     <div className="flex flex-col gap-2 p-4">
       <div className="flex justify-between items-center text-2xl">
         <ToggleButton
           toggle={liked}
-          onToggle={setLiked}
-          onIcon={<LikesHeartIcon />}
-          offIcon={<LikesHeartFillIcon />}
+          onToggle={handleLikePost}
+          onIcon={<LikesHeartFillIcon />}
+          offIcon={<LikesHeartIcon />}
         />
         <ToggleButton
           toggle={bookmarked}
           onToggle={setBookMarked}
-          onIcon={<BookmarkIcon />}
-          offIcon={<BookmarkFillIcon />}
+          onIcon={<BookmarkFillIcon />}
+          offIcon={<BookmarkIcon />}
         />
       </div>
       <p className="font-semibold">

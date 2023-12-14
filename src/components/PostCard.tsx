@@ -64,6 +64,7 @@ export default function PostCard({
         alt="게시글 이미지"
       />
       <Action
+        id={id}
         username={username}
         text={text}
         createdAt={createdAt}

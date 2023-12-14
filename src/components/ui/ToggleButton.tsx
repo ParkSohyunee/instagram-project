@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 interface ToggleButtonProps {
-  toggle: boolean;
+  toggle: boolean | undefined;
   onToggle: (liked: boolean) => void;
   onIcon: ReactNode;
   offIcon: ReactNode;

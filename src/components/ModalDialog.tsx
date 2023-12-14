@@ -46,6 +46,7 @@ export default function ModalDialog({ post, onClose }: ModalDialog) {
             <h1 className="font-semibold">{postDetail?.username}</h1>
           </div>
           <Action
+            id={postDetail?.id || ""}
             username={postDetail?.username || ""}
             text={postDetail?.text || ""}
             createdAt={postDetail?.createdAt || ""}
