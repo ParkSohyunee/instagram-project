@@ -165,3 +165,23 @@ export async function disLikePost(postId: string, userId: string) {
     .unset([`likes[_ref=="${userId}"]`]) // userId가 배열에 들어있다면 unset => likes 배열은 좋아요를 누른 user가 들어있음
     .commit();
 }
+
+export async function savePost(postId: string, userId: string) {
+  return await client
+    .patch(userId)
+    .setIfMissing({ bookmarks: [] })
+    .append("bookmarks", [
+      {
+        _ref: postId,
+        _type: "reference",
+      },
+    ])
+    .commit({ autoGenerateArrayKeys: true });
+}
+
+export async function unSavedPost(postId: string, userId: string) {
+  return await client
+    .patch(userId)
+    .unset([`bookmarks[_ref=="${postId}"]`])
+    .commit();
+}
