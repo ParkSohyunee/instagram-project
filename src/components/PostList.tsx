@@ -13,15 +13,7 @@ export default function PostList() {
             key={post.id}
             className="rounded-md overflow-hidden shadow-lg bg-neutral-50 mb-4"
           >
-            <PostCard
-              id={post.id}
-              username={post.username}
-              userImage={post.userImage}
-              text={post.text}
-              createdAt={post.createdAt}
-              likes={post.likes}
-              image={post.image}
-            />
+            <PostCard post={post} />
           </article>
         ))}
     </section>

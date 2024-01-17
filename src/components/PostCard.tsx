@@ -8,26 +8,14 @@ import InputForm from "./InputForm";
 
 import Action from "./Action";
 import ModalPortal from "./ModalPortal";
+import { SimplePost } from "@/model/post";
 
 interface PostCardProps {
-  id: string;
-  userImage: string;
-  username: string;
-  text: string;
-  createdAt: string;
-  likes: string[];
-  image: string;
+  post: SimplePost;
 }
 
-export default function PostCard({
-  id,
-  userImage,
-  username,
-  text,
-  createdAt,
-  likes,
-  image,
-}: PostCardProps) {
+export default function PostCard({ post }: PostCardProps) {
+  const { id, userImage, username, image } = post;
   const [showModal, setShowModal] = useState(false);
   const [postId, setPostId] = useState("");
 
@@ -63,13 +51,7 @@ export default function PostCard({
         height={400}
         alt="게시글 이미지"
       />
-      <Action
-        id={id}
-        username={username}
-        text={text}
-        createdAt={createdAt}
-        likes={likes}
-      />
+      <Action post={post} />
       <InputForm />
     </>
   );

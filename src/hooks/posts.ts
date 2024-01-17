@@ -1,14 +1,40 @@
-import useSWR, { mutate } from "swr";
+import useSWR from "swr";
 import { SimplePost } from "@/model/post";
 
+async function updateLike(id: string, like: boolean) {
+  return fetch("/api/likes", {
+    method: "PUT",
+    body: JSON.stringify({ id, like }),
+  }).then((res) => res.json());
+}
+
 export default function usePosts() {
-  const { data: posts, isLoading, error } = useSWR<SimplePost[]>("/api/posts");
+  const {
+    data: posts,
+    isLoading,
+    error,
+    mutate,
+  } = useSWR<SimplePost[]>("/api/posts");
 
   const setLike = (post: SimplePost, username: string, like: boolean) => {
-    fetch("/api/likes", {
-      method: "PUT",
-      body: JSON.stringify({ id: post.id, like }),
-    }).then(() => mutate("/api/posts")); // like 처리후에 posts 상태를 업데이트
+    // optimistic UI
+    const newPost = {
+      ...post,
+      likes: like
+        ? [...post.likes, username]
+        : post.likes.filter((item) => item !== username),
+    };
+
+    const newPosts = posts?.map((post) =>
+      post.id === post.id ? newPost : post
+    );
+
+    return mutate(updateLike(post.id, like), {
+      optimisticData: newPosts,
+      populateCache: false,
+      revalidate: false,
+      rollbackOnError: true,
+    });
   };
 
   return { posts, isLoading, error, setLike };
