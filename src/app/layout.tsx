@@ -19,10 +19,12 @@ export default function RootLayout({
 }) {
   return (
     <html className={openSans.className}>
-      <body className="flex flex-col w-full h-full mx-auto max-w-screen-2xl">
+      <body className="w-full max-w-screen-xl overflow-auto mx-auto">
         <NextAuthProvider>
           <SWRProvider>
-            <Header />
+            <header className="sticky top-0 py-4 px-8 border-b shadow-sm bg-neutral-50 z-10">
+              <Header />
+            </header>
             <main className="grow px-20 py-14">{children}</main>
             <footer className="bg-green-100">footer</footer>
           </SWRProvider>

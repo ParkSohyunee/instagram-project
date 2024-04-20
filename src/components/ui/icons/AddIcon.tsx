@@ -1,17 +1,5 @@
-import Link from "next/link";
-import { BsPlusSquare, BsPlusSquareFill } from "react-icons/bs";
+import { BsPlusSquare } from "react-icons/bs";
 
-interface Props {
-  pathName: string;
-}
-
-export default function AddIcon({ pathName }: Props) {
-  const isActive = pathName === "/new";
-  return (
-    <Link href="/new">
-      <div className="cursor-pointer text-2xl">
-        {isActive ? <BsPlusSquareFill /> : <BsPlusSquare />}
-      </div>
-    </Link>
-  );
+export default function AddIcon() {
+  return <BsPlusSquare className="w-7 h-7" />;
 }

@@ -1,17 +1,5 @@
-import Link from "next/link";
-import { BiSearch, BiSolidSearch } from "react-icons/bi";
+import { RiSearchLine } from "react-icons/ri";
 
-interface Props {
-  pathName: string;
-}
-
-export default function SearchIcon({ pathName }: Props) {
-  const isActive = pathName === "/search";
-  return (
-    <Link href="/search">
-      <div className="cursor-pointer">
-        {isActive ? <BiSolidSearch /> : <BiSearch />}
-      </div>
-    </Link>
-  );
+export default function SearchIcon() {
+  return <RiSearchLine className="w-7 h-7" />;
 }

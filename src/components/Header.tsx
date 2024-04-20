@@ -1,37 +1,65 @@
 "use client";
 
-import Loginbutton from "./LoginButton";
-import { useSession } from "next-auth/react";
-import UserAvatar from "./UserAvatar";
-import SearchIcon from "./ui/icons/SearchIcon";
-import { usePathname } from "next/navigation";
-import HomeIcon from "./ui/icons/HomeIcon";
-import AddIcon from "./ui/icons/AddIcon";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+
+import Loginbutton from "./LoginButton";
+import UserAvatar from "./UserAvatar";
+import {
+  HomeIcon,
+  HomeFilledIcon,
+  SearchIcon,
+  SearchFilledIcon,
+  AddIcon,
+  AddFilledIcon,
+} from "./ui/icons";
 
 export default function Header() {
   const { data } = useSession();
   const pathName = usePathname();
 
+  const menus = [
+    {
+      href: "/",
+      icon: <HomeIcon />,
+      selected: <HomeFilledIcon />,
+    },
+    {
+      href: "/search",
+      icon: <SearchIcon />,
+      selected: <SearchFilledIcon />,
+    },
+    {
+      href: "/new",
+      icon: <AddIcon />,
+      selected: <AddFilledIcon />,
+    },
+  ];
+
   return (
-    <header className="sticky top-0 flex justify-between items-center py-4 px-8 border-b shadow-sm bg-neutral-50 z-10">
+    <div className="flex justify-between items-center px-6">
       <Link href="/">
-        <h1 className="text-4xl font-semibold">Instantgram</h1>
+        <h1 className="text-3xl font-bold">Instantgram</h1>
       </Link>
-      <nav className="flex gap-4 items-center text-3xl">
-        <HomeIcon pathName={pathName} />
-        <SearchIcon pathName={pathName} />
-        <AddIcon pathName={pathName} />
-        {data && (
-          <UserAvatar
-            image={data.user.image || ""}
-            size="small"
-            highlighter={true}
-            username={data.user.username}
-          />
-        )}
-        <Loginbutton size="small" type={false} />
+      <nav>
+        <ul className="flex gap-4 items-center p-4">
+          {menus.map(({ href, icon, selected }) => (
+            <li key={href}>
+              <Link href={href}>{pathName === href ? selected : icon}</Link>
+            </li>
+          ))}
+          {data && (
+            <UserAvatar
+              image={data.user.image || ""}
+              size="small"
+              highlighter={true}
+              username={data.user.username}
+            />
+          )}
+          <Loginbutton size="small" type={false} />
+        </ul>
       </nav>
-    </header>
+    </div>
   );
 }

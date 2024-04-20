@@ -36,7 +36,9 @@ export default function Loginbutton(props: Props) {
           onClick={handelSignout}
           className={`text-xl p-0.5 rounded-md ${BG_GRADIENT_COLOR}`}
         >
-          <div className={`bg-white ${padding} rounded-sm`}>{message}</div>
+          <div className={`bg-white ${padding} rounded-sm hover:opacity-90`}>
+            {message}
+          </div>
         </button>
       ) : props.type ? (
         <button
@@ -50,9 +52,11 @@ export default function Loginbutton(props: Props) {
       ) : (
         <Link
           href="/signin"
-          className={`text-xl p-0.5 rounded-md ${BG_GRADIENT_COLOR}`}
+          className={`text-xl p-0.5 rounded-md ${BG_GRADIENT_COLOR} `}
         >
-          <div className={`bg-white ${padding} rounded-sm`}>Sign in</div>
+          <div className={`bg-white ${padding} rounded-sm hover:opacity-90`}>
+            Sign in
+          </div>
         </Link>
       )}
     </>
