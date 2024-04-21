@@ -6,6 +6,7 @@ import Link from "next/link";
 interface Props {
   size: string;
   type: boolean;
+  callbackUrl?: string;
 }
 
 const BG_GRADIENT_COLOR =
@@ -19,14 +20,14 @@ export default function Loginbutton(props: Props) {
 
   const handleSignin = async () => {
     try {
-      await signIn("google", { callbackUrl: "http://localhost:3000" });
+      await signIn("google", { callbackUrl: props.callbackUrl });
     } catch (error) {
       if (error instanceof Error) console.log(error.message);
     }
   };
 
   const handelSignout = async () => {
-    await signOut({ callbackUrl: "http://localhost:3000" });
+    await signOut({ callbackUrl: props.callbackUrl });
   };
 
   return (

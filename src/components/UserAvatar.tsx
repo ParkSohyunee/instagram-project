@@ -36,10 +36,12 @@ export default function UserAvatar({
           `bg-gradient-to-tr from-yellow from-20 via-pink via-50 to-purple to-90 rounded-full`
         }`}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={image}
+          src={image ?? undefined}
           alt="user-avatar"
           className={`rounded-full ${linkImageSize} p-0.5`}
+          referrerPolicy="no-referrer"
         />
       </div>
     </Link>
